@@ -4,44 +4,51 @@ import 'package:quiz_app/start_screen.dart';
 import 'package:quiz_app/question.dart';
 import 'package:quiz_app/data/questions.dart';
 
-class Quiz extends StatefulWidget{
+class Quiz extends StatefulWidget {
   const Quiz({super.key});
   @override
-  State<Quiz> createState() { 
+  State<Quiz> createState() {
     return _QuizState();
   }
 }
 
-class _QuizState extends State<Quiz>{
+class _QuizState extends State<Quiz> {
   Widget? activeScreen;
-  List<String> choosenAnswers=[];
+  List<String> choosenAnswers = [];
   @override
   void initState() {
     activeScreen = StartScreen(switchScreen);
     super.initState();
   }
-  void switchScreen(){
+
+  void switchScreen() {
     setState(() {
       activeScreen = Question(chooseAnswer);
     });
   }
-  void restartQuiz(){
-     setState(() {
+
+  void restartQuiz() {
+    setState(() {
       activeScreen = Question(chooseAnswer);
     });
   }
-  void chooseAnswer(String answer){
+
+  void chooseAnswer(String answer) {
     choosenAnswers.add(answer);
-    if(choosenAnswers.length == questions.length){
+    if (choosenAnswers.length == questions.length) {
       setState(() {
-        activeScreen = ResultsScreen(chosenAnswers:choosenAnswers,onRestart: restartQuiz,);
-        choosenAnswers=[];
+        activeScreen = ResultsScreen(
+          chosenAnswers: choosenAnswers,
+          onRestart: restartQuiz,
+        );
+        choosenAnswers = [];
       });
     }
   }
+
   @override
-  Widget build(context){
-    return  MaterialApp(
+  Widget build(context) {
+    return MaterialApp(
       home: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
@@ -57,4 +64,5 @@ class _QuizState extends State<Quiz>{
         ),
       ),
     );
-  }}
+  }
+}
